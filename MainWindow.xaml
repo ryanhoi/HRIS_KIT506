@@ -14,7 +14,7 @@
                 <StackPanel x:Name="staffDetailsPanel" Orientation="Vertical" Grid.Column="1" Margin="10" Width="430">
                     <StackPanel Orientation="Horizontal" Margin="0,0,10,0">
                         <Label Content="ID:"></Label>
-                        <Label Content="{Binding Path=ID}"></Label>
+                        <Label Content="{Binding Path= ID }"></Label>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,0,10,0">
                         <Label Content="Name:"></Label>
@@ -37,11 +37,11 @@
                         <Label Content="{Binding Path=Email}"></Label>
                     </StackPanel>
                     <Label Content="Consultation hours:" Margin="0,0,10,0"></Label>
-                    <ListBox Height="95" ItemsSource="{Binding Path=WorkTimes}" 
+                    <ListBox Height="95" ItemsSource="{Binding Path=WorkTime}" 
                                  Margin="0,0,10,0"
                         />
                     <Label Content="Teaching this semester:" Margin="0,0,10,0"></Label>
-                    <ListBox Height="95" ItemsSource="{Binding Path=Teaching}" 
+                    <ListBox Height="95" ItemsSource="{Binding Path=Class}" 
                                  Margin="0,0,10,0"
                         />
                 </StackPanel>
@@ -50,12 +50,11 @@
 
         <TabItem Header="Units">
             <WrapPanel Margin="0" Width="616">
-                <TextBox Text="{Binding EmployeeName,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Width="200" TextChanged="TextBox_TextChanged"/>
                 <ListBox 
                     x:Name="unitListBox" 
                     Margin="10" 
                     SelectionChanged="unitListBox_SelectionChanged"
-			        
+			        ItemsSource="{Binding Source={StaticResource UnitList}}"
                     Width="595" 
                     Height="141"
                 />

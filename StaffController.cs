@@ -25,7 +25,7 @@ namespace HRIS_KIT506
 
             foreach (Staff e in Staff)
             {
-                e.WorkTimes = DbAdapter.LoadConsultationItems(e.ID);
+                e.WorkTime = DbAdapter.LoadConsultationItems(e.ID);
                 e.Class = DbAdapter.LoadStaffClasses(e.ID);
             }
         }

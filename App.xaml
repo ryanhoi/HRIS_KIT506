@@ -10,11 +10,11 @@
                             MethodName="GetViewableList">
             
         </ObjectDataProvider>
+        
         <local:UnitController x:Key="unitcontroller"/>
         <ObjectDataProvider x:Key="UnitList"
-                            ObjectType="{StaticResource unitcontroller}"
+                            ObjectInstance="{StaticResource unitcontroller}"
                             MethodName="GetViewableList">
-            
         </ObjectDataProvider>
 
 

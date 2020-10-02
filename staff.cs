@@ -16,16 +16,16 @@ namespace HRIS_KIT506
         public string Phone { get; set; }
         public string Room { get; set; }
         public string Email { get; set; }
-        public List<Consultation> WorkTimes { get; set; }
+        public List<Consultation> WorkTime { get; set; }
         public List<Class> Class { get; set; }
         public bool BusyNow
         {
             get
             {
-                if (WorkTimes != null)
+                if (WorkTime != null)
                 {
                     DateTime now = DateTime.Now;
-                    var overlapping = from Consultation work in WorkTimes
+                    var overlapping = from Consultation work in WorkTime
                                       where work.Overlaps(now)
                                       select work;
                     return overlapping.Count() > 0;
@@ -44,7 +44,7 @@ namespace HRIS_KIT506
             get
             {
                 double total = 0;
-                foreach (Consultation item in WorkTimes)
+                foreach (Consultation item in WorkTime)
                 {
                     total += (item.End - item.Start).TotalHours;
                 }
