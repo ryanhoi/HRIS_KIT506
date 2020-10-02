@@ -62,10 +62,10 @@
     <Compile Include="Class.cs" />
     <Compile Include="Consultation.cs" />
     <Compile Include="DbAdapter.cs" />
-    <Compile Include="Roster.cs" />
     <Compile Include="staff.cs" />
+    <Compile Include="StaffController.cs" />
     <Compile Include="Unit.cs" />
-    <Compile Include="UnitClass.cs" />
+    <Compile Include="UnitController.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -78,6 +78,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ResourceDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

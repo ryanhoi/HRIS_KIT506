@@ -12,5 +12,6 @@ namespace HRIS_KIT506
         public int Coordinator { get; set; }
         public string Title { get; set; }
         public string Code { get; set; }
+        public List<Class> ClassList { get; set; }
     }
 }

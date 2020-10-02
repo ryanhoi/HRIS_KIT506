@@ -12,7 +12,7 @@ namespace HRIS_KIT506
 {
     abstract class DbAdapter
     {
-        private static bool reportingErrors = false;
+        private static bool ReportingErrors = false;
         private const string db = "kit206";
         private const string user = "kit206";
         private const string pass = "kit206";
@@ -40,9 +40,9 @@ namespace HRIS_KIT506
         }
 
         //Load all staff in db
-        public static List<staff> LoadAllStaff()
+        public static List<Staff> LoadAllStaff()
         {
-            List<staff> staff = new List<staff>();
+            List<Staff> staff = new List<Staff>();
 
             MySqlConnection conn = GetConnection();
             MySqlDataReader rdr = null;
@@ -59,7 +59,7 @@ namespace HRIS_KIT506
 
                 while (rdr.Read())
                 {
-                    staff.Add(new staff
+                    staff.Add(new Staff
                     {
                         ID = rdr.GetInt32(0),
                         Title = rdr.GetString(1),
@@ -91,7 +91,7 @@ namespace HRIS_KIT506
         }
 
         //Load consultation hours in db
-        public static List<Consultation> LoadRosterItems(int id)
+        public static List<Consultation> LoadConsultationItems(int id)
         {
             List<Consultation> work = new List<Consultation>();
 
@@ -283,7 +283,7 @@ namespace HRIS_KIT506
         /// </summary>
         private static void ReportError(string msg, Exception e)
         {
-            if (reportingErrors)
+            if (ReportingErrors)
             {
                 MessageBox.Show("An error occurred while " + msg + ". Try again later.\n\nError Details:\n" + e,
                     "Error", MessageBoxButton.OK, MessageBoxImage.Error);

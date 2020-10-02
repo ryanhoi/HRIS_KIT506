@@ -6,7 +6,76 @@
         xmlns:local="clr-namespace:HRIS_KIT506"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <TabControl Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="5">
+        <TabItem Header="Staff">
+            <WrapPanel Margin="0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="633">
+                <ListBox x:Name="sampleListBox" Margin="10" SelectionChanged="sampleListBox_SelectionChanged"
+			        ItemsSource="{Binding Source={StaticResource StaffList}}" Width="145"/>
+                <StackPanel x:Name="staffDetailsPanel" Orientation="Vertical" Grid.Column="1" Margin="10" Width="430">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,10,0">
+                        <Label Content="ID:"></Label>
+                        <Label Content="{Binding Path=ID}"></Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,10,0">
+                        <Label Content="Name:"></Label>
+                        <Label Content="{Binding Path=Name}"></Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,10,0">
+                        <Label Content="Campus:"></Label>
+                        <Label Content="{Binding Path=Campus}"></Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,10,0">
+                        <Label Content="Phone:"></Label>
+                        <Label Content="{Binding Path=Phone}"></Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,10,0">
+                        <Label Content="Room:"></Label>
+                        <Label Content="{Binding Path=Room}"></Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,10,0">
+                        <Label Content="Email:"></Label>
+                        <Label Content="{Binding Path=Email}"></Label>
+                    </StackPanel>
+                    <Label Content="Consultation hours:" Margin="0,0,10,0"></Label>
+                    <ListBox Height="95" ItemsSource="{Binding Path=WorkTimes}" 
+                                 Margin="0,0,10,0"
+                        />
+                    <Label Content="Teaching this semester:" Margin="0,0,10,0"></Label>
+                    <ListBox Height="95" ItemsSource="{Binding Path=Teaching}" 
+                                 Margin="0,0,10,0"
+                        />
+                </StackPanel>
+            </WrapPanel>
+        </TabItem>
+
+        <TabItem Header="Units">
+            <WrapPanel Margin="0" Width="616">
+                <TextBox Text="{Binding EmployeeName,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Width="200" TextChanged="TextBox_TextChanged"/>
+                <ListBox 
+                    x:Name="unitListBox" 
+                    Margin="10" 
+                    SelectionChanged="unitListBox_SelectionChanged"
+			        
+                    Width="595" 
+                    Height="141"
+                />
+
+                <StackPanel x:Name="unitDetailsPanel" Orientation="Vertical" Grid.Column="1" Margin="10,5,10,10" Width="593" Height="265">
+                    <DataGrid IsReadOnly="True" AutoGenerateColumns="False" ItemsSource="{Binding Path=ClassList}" Margin="0,0,-0.2,0" Height="264">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Day" Binding="{Binding Day}" MinWidth="50"/>
+                            <DataGridTextColumn Header="Start Time" Binding="{Binding Start}" MinWidth="50"/>
+                            <DataGridTextColumn Header="End Time" Binding="{Binding End}" MinWidth="50"/>
+                            <DataGridTextColumn Header="Type" Binding="{Binding Type}" MinWidth="50"/>
+                            <DataGridTextColumn Header="Campus" Binding="{Binding Campus}" MinWidth="50"/>
+                            <DataGridTextColumn Header="Room" Binding="{Binding Room}" MinWidth="50"/>
+                            <DataGridTextColumn Header="Staff" Binding="{Binding Staff}" MinWidth="50"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+
+            </WrapPanel>
+        </TabItem>
+
+    </TabControl>
 </Window>
