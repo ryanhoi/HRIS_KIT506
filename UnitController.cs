@@ -12,12 +12,12 @@ namespace HRIS_KIT506
         private List<Unit> Unit;
         public List<Unit> Courses { get { return Unit; } set { } }
 
-        private ObservableCollection<Unit> viewableUnit;
-        private ObservableCollection<Unit> VisibleCourses { get { return viewableUnit; } set { } }
+        private ObservableCollection<Unit> ViewableUnit;
+        public ObservableCollection<Unit> VisibleCourses { get { return ViewableUnit; } set { } }
         public UnitController()
         {
             Unit = DbAdapter.LoadAllUnit();
-            viewableUnit = new ObservableCollection<Unit>(Unit); //this list we will modify later
+            ViewableUnit = new ObservableCollection<Unit>(Unit); //this list we will modify later
 
             //Part of step 2.3.2 from Week 9 tutorial
             foreach (Unit e in Unit)

@@ -68,7 +68,7 @@
                             <DataGridTextColumn Header="Type" Binding="{Binding Type}" MinWidth="50"/>
                             <DataGridTextColumn Header="Campus" Binding="{Binding Campus}" MinWidth="50"/>
                             <DataGridTextColumn Header="Room" Binding="{Binding Room}" MinWidth="50"/>
-                            <DataGridTextColumn Header="Staff" Binding="{Binding Staff}" MinWidth="50"/>
+                            <DataGridTextColumn Header="Staff" Binding="{Binding StaffID}" MinWidth="50"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>

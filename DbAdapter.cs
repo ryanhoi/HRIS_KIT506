@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -253,6 +254,7 @@ namespace HRIS_KIT506
                         Campus = ParseEnum<Campus>(rdr.GetString(5)),
                         StaffID = rdr.GetInt32(6)
                     });
+                    
                 }
             }
             catch (MySqlException e)
