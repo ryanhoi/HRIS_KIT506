@@ -1,0 +1,293 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows; //for generating a MessageBox upon encountering an error
+using MySql.Data.MySqlClient;
+using MySql.Data.Types;
+
+
+namespace HRIS_KIT506
+{
+    abstract class DbAdapter
+    {
+        private static bool reportingErrors = false;
+        private const string db = "kit206";
+        private const string user = "kit206";
+        private const string pass = "kit206";
+        private const string server = "alacritas.cis.utas.edu.au";
+
+        private static MySqlConnection conn = null;
+
+        public static T ParseEnum<T>(string value)
+        {
+            return (T)Enum.Parse(typeof(T), value);
+        }
+
+        /// <summary>
+        /// Creates and returns (but does not open) the connection to the database.
+        /// </summary>
+        private static MySqlConnection GetConnection()
+        {
+            if (conn == null)
+            {
+                //Note: This approach is not thread-safe
+                string connectionString = String.Format("Database={0};Data Source={1};User Id={2};Password={3}", db, server, user, pass);
+                conn = new MySqlConnection(connectionString);
+            }
+            return conn;
+        }
+
+        //Load all staff in db
+        public static List<staff> LoadAllStaff()
+        {
+            List<staff> staff = new List<staff>();
+
+            MySqlConnection conn = GetConnection();
+            MySqlDataReader rdr = null;
+
+            try
+            {
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand
+                    (
+                    "select id, title, given_name, family_name, campus, phone, room, email from staff", conn
+                    );
+                rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    staff.Add(new staff
+                    {
+                        ID = rdr.GetInt32(0),
+                        Title = rdr.GetString(1),
+                        Name = rdr.GetString(2) + ", " + rdr.GetString(3) + " (" + rdr.GetString(1) + ")",
+                        Campus = ParseEnum<Campus>(rdr.GetString(4)),
+                        Phone = rdr.GetString(5),
+                        Room = rdr.GetString(6),
+                        Email = rdr.GetString(7)
+                    });
+                }
+            }
+            catch (MySqlException e)
+            {
+                ReportError("loading staff", e);
+            }
+            finally
+            {
+                if (rdr != null)
+                {
+                    rdr.Close();
+                }
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return staff;
+        }
+
+        //Load consultation hours in db
+        public static List<Consultation> LoadRosterItems(int id)
+        {
+            List<Consultation> work = new List<Consultation>();
+
+            MySqlConnection conn = GetConnection();
+            MySqlDataReader rdr = null;
+
+            try
+            {
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand("select day, start, end from consultation where staff_id=?id", conn);
+                cmd.Parameters.AddWithValue("id", id);
+                rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    work.Add(new Consultation
+                    {
+                        Day = ParseEnum<DayOfWeek>(rdr.GetString(0)),
+                        Start = rdr.GetTimeSpan(1),
+                        End = rdr.GetTimeSpan(2)
+                    });
+                }
+            }
+            catch (MySqlException e)
+            {
+                ReportError("loading roster items", e);
+            }
+            finally
+            {
+                if (rdr != null)
+                {
+                    rdr.Close();
+                }
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return work;
+        }
+
+        //load selected staff teaching units in db
+        public static List<Class> LoadStaffClasses(int id)
+        {
+            List<Class> teach = new List<Class>();
+
+            MySqlConnection conn = GetConnection();
+            MySqlDataReader rdr = null;
+
+            try
+            {
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand("select distinct unit_code from class where staff=?id", conn);
+                cmd.Parameters.AddWithValue("id", id);
+                rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    teach.Add(new Class
+                    {
+                        UnitCode = rdr.GetString(0)
+                    });
+                }
+            }
+            catch (MySqlException e)
+            {
+                ReportError("loading classes", e);
+            }
+            finally
+            {
+                if (rdr != null)
+                {
+                    rdr.Close();
+                }
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return teach;
+        }
+
+        //load all units in db
+        public static List<Unit> LoadAllUnit()
+        {
+            List<Unit> unit = new List<Unit>();
+
+            MySqlConnection conn = GetConnection();
+            MySqlDataReader rdr = null;
+
+            try
+            {
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand("select code, title, coordinator from unit", conn);
+                rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    unit.Add(new Unit
+                    {
+                        Code = rdr.GetString(0),
+                        Title = rdr.GetString(1),
+                        Coordinator = rdr.GetInt32(2)
+                    });
+                }
+            }
+            catch (MySqlException e)
+            {
+                ReportError("loading units", e);
+            }
+            finally
+            {
+                if (rdr != null)
+                {
+                    rdr.Close();
+                }
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return unit;
+        }
+
+        //load classes of selectced unit in db
+        public static List<Class> LoadClasses(string code)
+        {
+            List<Class> course = new List<Class>();
+
+            MySqlConnection conn = GetConnection();
+            MySqlDataReader rdr = null;
+
+            try
+            {
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand
+                    (
+                    "select day, start, end, type, room, campus, staff from class where unit_code=?code", conn
+                    );
+                cmd.Parameters.AddWithValue("code", code);
+                rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    course.Add(new Class
+                    {
+                        Day = ParseEnum<DayOfWeek>(rdr.GetString(0)),
+                        Start = rdr.GetTimeSpan(1),
+                        End = rdr.GetTimeSpan(2),
+                        Type = ParseEnum<Type>(rdr.GetString(3)),
+                        Room = rdr.GetString(4),
+                        Campus = ParseEnum<Campus>(rdr.GetString(5)),
+                        StaffID = rdr.GetInt32(6)
+                    });
+                }
+            }
+            catch (MySqlException e)
+            {
+                ReportError("loading classes", e);
+            }
+            finally
+            {
+                if (rdr != null)
+                {
+                    rdr.Close();
+                }
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return course;
+        }
+
+
+        /// <summary>
+        /// In a more complete application this error would be logged to a file
+        /// and the error reported back to the original caller, who is closer
+        /// to the GUI and hence better able to produce the error message box
+        /// (which would not show the actual error details like this does).
+        /// </summary>
+        private static void ReportError(string msg, Exception e)
+        {
+            if (reportingErrors)
+            {
+                MessageBox.Show("An error occurred while " + msg + ". Try again later.\n\nError Details:\n" + e,
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+    }
+}

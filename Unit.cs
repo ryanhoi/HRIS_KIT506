@@ -10,7 +10,7 @@ namespace HRIS_KIT506
     class Unit
     {
         public int Coordinator { get; set; }
-        public string title { get; set; }
-        public string code { get; set; }
+        public string Title { get; set; }
+        public string Code { get; set; }
     }
 }
