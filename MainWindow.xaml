@@ -36,6 +36,10 @@
                         <Label Content="Email:"></Label>
                         <Label Content="{Binding Path=Email}"></Label>
                     </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,10,0">
+                        <Label Content="Categiry:"></Label>
+                        <Label Content="{Binding Path=Category}"></Label>
+                    </StackPanel>
                     <Label Content="Consultation hours:" Margin="0,0,10,0"></Label>
                     <ListBox Height="95" ItemsSource="{Binding Path=WorkTime}" 
                                  Margin="0,0,10,0"

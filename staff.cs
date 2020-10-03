@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace HRIS_KIT506
 {
+    public enum Category { Academic, Casual, Admin, Technical};
     public enum Campus { Launceston, Hobart};
     public class Staff
     {
@@ -13,6 +14,7 @@ namespace HRIS_KIT506
         public string Title { get; set; }
         public string Name { get; set; }
         public Campus Campus { get; set; }
+        public Category Category { get; set; }
         public string Phone { get; set; }
         public string Room { get; set; }
         public string Email { get; set; }

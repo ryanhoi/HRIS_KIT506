@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -40,6 +41,7 @@ namespace HRIS_KIT506
             return conn;
         }
 
+
         //Load all staff in db
         public static List<Staff> LoadAllStaff()
         {
@@ -48,13 +50,14 @@ namespace HRIS_KIT506
             MySqlConnection conn = GetConnection();
             MySqlDataReader rdr = null;
 
+
             try
             {
                 conn.Open();
 
                 MySqlCommand cmd = new MySqlCommand
                     (
-                    "select id, title, given_name, family_name, campus, phone, room, email from staff", conn
+                    "select id, title, given_name, family_name, campus, phone, room, email, category from staff", conn
                     );
                 rdr = cmd.ExecuteReader();
 
@@ -68,7 +71,8 @@ namespace HRIS_KIT506
                         Campus = ParseEnum<Campus>(rdr.GetString(4)),
                         Phone = rdr.GetString(5),
                         Room = rdr.GetString(6),
-                        Email = rdr.GetString(7)
+                        Email = rdr.GetString(7),
+                        Category = ParseEnum<Category>(rdr.GetString(8))
                     });
                 }
             }
