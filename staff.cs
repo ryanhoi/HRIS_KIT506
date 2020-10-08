@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace HRIS_KIT506
 {
-    public enum Category { Academic, Casual, Admin, Technical};
+    public enum Category { Any, Academic, Casual, Admin, Technical};
     public enum Campus { Launceston, Hobart};
     public class Staff
     {
         public int ID { get; set; }
         public string Title { get; set; }
-        public string Name { get; set; }
+        public string GivenName { get; set; }
+        public string FamilyName { get; set; }
         public Campus Campus { get; set; }
         public Category Category { get; set; }
         public string Phone { get; set; }
@@ -68,7 +70,7 @@ namespace HRIS_KIT506
         public override string ToString()
         {
             //For the purposes of this week's demonstration this returns only the name
-            return Name;
+            return FamilyName + ", "  + GivenName + " (" + Title + ")";
         }
     }
 }

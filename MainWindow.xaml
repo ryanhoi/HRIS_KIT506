@@ -5,50 +5,62 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HRIS_KIT506"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <TabControl Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="5">
+        Title="MainWindow" Height="520" Width="680">
+    <TabControl Grid.ColumnSpan="2" Margin="5">
         <TabItem Header="Staff">
-            <WrapPanel Margin="0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="633">
-                <ListBox x:Name="sampleListBox" Margin="10" SelectionChanged="sampleListBox_SelectionChanged"
-			        ItemsSource="{Binding Source={StaticResource StaffList}}" Width="145"/>
-                <StackPanel x:Name="staffDetailsPanel" Orientation="Vertical" Grid.Column="1" Margin="10" Width="430">
-                    <StackPanel Orientation="Horizontal" Margin="0,0,10,0">
-                        <Label Content="ID:"></Label>
-                        <Label Content="{Binding Path= ID }"></Label>
+            <WrapPanel Margin="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="250*"/>
+                        <ColumnDefinition Width="550*"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="staffComboBox"  HorizontalAlignment="Left" Margin="10,28,0,0" VerticalAlignment="Top" Width="168"
+                        ItemsSource="{Binding Source={StaticResource StaffCategory}}"
+                        SelectedIndex="0" SelectionChanged="staffComboBox_SelectionChanged" />
+                    <ListBox x:Name="staffListBox" Margin="10,55,10,-0.2" SelectionChanged="staffListBox_SelectionChanged"
+			            ItemsSource="{Binding Source={StaticResource StaffList}}" Width="168"/>
+                    <StackPanel x:Name="staffDetailsPanel" Orientation="Vertical" Grid.Column="1" Margin="10" Width="430">
+                        <StackPanel Orientation="Horizontal" Margin="0" HorizontalAlignment="Left" Width="250">
+                            <Label Content="ID:"/>
+                            <Label Content="{Binding ID}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0" HorizontalAlignment="Left" Width="250">
+                            <Label Content="Name:"/>
+                            <TextBlock Text="{Binding Title}" VerticalAlignment="Center" Margin="0,0,5,0" />
+                            <TextBlock Text="{Binding GivenName}" VerticalAlignment="Center" Margin="0,0,5,0" />
+                            <TextBlock Text="{Binding FamilyName}" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,10,0" Width="250" HorizontalAlignment="Left">
+                            <Label Content="Campus:"/>
+                            <Label Content="{Binding Campus}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,10,0" Width="250" HorizontalAlignment="Left">
+                            <Label Content="Phone:"/>
+                            <Label Content="{Binding Phone}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,10,0" Width="250" HorizontalAlignment="Left">
+                            <Label Content="Room:"/>
+                            <Label Content="{Binding Room}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,10,0" Width="250" HorizontalAlignment="Left">
+                            <Label Content="Email:"/>
+                            <Label Content="{Binding Email}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,10,0" Width="250" HorizontalAlignment="Left">
+                            <Label Content="Categiry:"/>
+                            <Label Content="{Binding Category}"/>
+                        </StackPanel>
+                        <Label Content="Consultation hours:" Margin="0,0,10,0"/>
+                        <ListBox Height="95" ItemsSource="{Binding WorkTime}" 
+                                     Margin="0,0,10,0"
+                            />
+                        <Label Content="Teaching this semester:" Margin="0,0,10,0"/>
+                        <ListBox Height="95" ItemsSource="{Binding Class}" 
+                                     Margin="0,0,10,0"
+                            />
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,10,0">
-                        <Label Content="Name:"></Label>
-                        <Label Content="{Binding Path=Name}"></Label>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,10,0">
-                        <Label Content="Campus:"></Label>
-                        <Label Content="{Binding Path=Campus}"></Label>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,10,0">
-                        <Label Content="Phone:"></Label>
-                        <Label Content="{Binding Path=Phone}"></Label>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,10,0">
-                        <Label Content="Room:"></Label>
-                        <Label Content="{Binding Path=Room}"></Label>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,10,0">
-                        <Label Content="Email:"></Label>
-                        <Label Content="{Binding Path=Email}"></Label>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,10,0">
-                        <Label Content="Categiry:"></Label>
-                        <Label Content="{Binding Path=Category}"></Label>
-                    </StackPanel>
-                    <Label Content="Consultation hours:" Margin="0,0,10,0"></Label>
-                    <ListBox Height="95" ItemsSource="{Binding Path=WorkTime}" 
-                                 Margin="0,0,10,0"
-                        />
-                    <Label Content="Teaching this semester:" Margin="0,0,10,0"></Label>
-                    <ListBox Height="95" ItemsSource="{Binding Path=Class}" 
-                                 Margin="0,0,10,0"
-                        />
-                </StackPanel>
+
+                </Grid>
             </WrapPanel>
         </TabItem>
 
@@ -60,8 +72,7 @@
                     SelectionChanged="unitListBox_SelectionChanged"
 			        ItemsSource="{Binding Source={StaticResource UnitList}}"
                     Width="595" 
-                    Height="141"
-                />
+                    Height="141"/>
 
                 <StackPanel x:Name="unitDetailsPanel" Orientation="Vertical" Grid.Column="1" Margin="10,5,10,10" Width="593" Height="265">
                     <DataGrid IsReadOnly="True" AutoGenerateColumns="False" ItemsSource="{Binding Path=ClassList}" Margin="0,0,-0.2,0" Height="264">

@@ -2,21 +2,40 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:HRIS_KIT506"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        
+
         <local:StaffController x:Key="staffcontroller" />
+        <local:UnitController x:Key="unitcontroller"/>
+
+        <!--Resource for binding stafflist  -->
         <ObjectDataProvider x:Key="StaffList"
                             ObjectInstance="{StaticResource staffcontroller}"
                             MethodName="GetViewableList">
-            
         </ObjectDataProvider>
-        
-        <local:UnitController x:Key="unitcontroller"/>
+
+        <!--Resource for filtering stafflist  -->
+        <ObjectDataProvider x:Key="FilterStaff"
+                            ObjectInstance="{StaticResource staffcontroller}"
+                            MethodName="Filter">
+        </ObjectDataProvider>
+
+        <!-- Resources for binding staff category-->
+        <ObjectDataProvider x:Key="StaffCategory"
+                            ObjectType="{x:Type sys:Enum}"
+                            MethodName="GetValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="local:Category"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <!-- Resources for binding Unitlist-->
         <ObjectDataProvider x:Key="UnitList"
                             ObjectInstance="{StaticResource unitcontroller}"
                             MethodName="GetViewableList">
         </ObjectDataProvider>
-
-
+        
     </Application.Resources>
 </Application>

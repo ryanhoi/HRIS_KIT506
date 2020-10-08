@@ -67,7 +67,8 @@ namespace HRIS_KIT506
                     {
                         ID = rdr.GetInt32(0),
                         Title = rdr.GetString(1),
-                        Name = rdr.GetString(2) + ", " + rdr.GetString(3) + " (" + rdr.GetString(1) + ")",
+                        GivenName = rdr.GetString(2),
+                        FamilyName = rdr.GetString(3),
                         Campus = ParseEnum<Campus>(rdr.GetString(4)),
                         Phone = rdr.GetString(5),
                         Room = rdr.GetString(6),
